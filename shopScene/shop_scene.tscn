@@ -1,0 +1,167 @@
+[gd_scene format=3 uid="uid://bi56xbefwrvfp"]
+
+[ext_resource type="Script" uid="uid://bwhpip660m6fo" path="res://shopScene/shop_scene_manager.gd" id="1_gk4dr"]
+[ext_resource type="Script" uid="uid://bmqb0m7f33x86" path="res://shopScene/hand/hand_card.gd" id="2_hwlf8"]
+[ext_resource type="Script" uid="uid://k2f4c26qg6w8" path="res://shopScene/desk/desk_card.gd" id="3_iv8jd"]
+[ext_resource type="Script" uid="uid://k0ounsppxcwj" path="res://shopScene/shop/shop_card.gd" id="4_av8qb"]
+
+[node name="ShopScene" type="Node2D" unique_id=1443481585]
+
+[node name="ShopSceneManager" type="Control" parent="." unique_id=105537073 node_paths=PackedStringArray("handCardNode", "deskCardNode", "shopCardNode", "buyRegionNode", "deskRegionNode", "cardsNode")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_gk4dr")
+handCardNode = NodePath("../HandCard")
+deskCardNode = NodePath("../DeskCard")
+shopCardNode = NodePath("../ShopCard")
+buyRegionNode = NodePath("../Region/BuyRegion")
+deskRegionNode = NodePath("../Region/DeskRegion")
+cardsNode = NodePath("../Cards")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1579174902]
+
+[node name="HandCard" type="Control" parent="." unique_id=1806533940]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -640.0
+offset_top = 280.0
+offset_right = 456.0
+offset_bottom = 472.0
+script = ExtResource("2_hwlf8")
+separationSize = 200
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HandCard" unique_id=934133207]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CardContainer" type="HBoxContainer" parent="HandCard/ScrollContainer" unique_id=99013206]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="DeskCard" type="Control" parent="." unique_id=284309087]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -768.0
+offset_top = -112.0
+offset_right = 648.0
+offset_bottom = 248.0
+script = ExtResource("3_iv8jd")
+separationSize = 300
+
+[node name="ScrollContainer" type="ScrollContainer" parent="DeskCard" unique_id=740287396]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CardContainer" type="HBoxContainer" parent="DeskCard/ScrollContainer" unique_id=1987242853]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="ShopCard" type="Control" parent="." unique_id=453085835]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -688.0
+offset_top = -432.0
+offset_right = 624.0
+offset_bottom = -192.0
+mouse_filter = 2
+script = ExtResource("4_av8qb")
+initCardNum = 5
+separationSize = 300
+cardStartPosition = Vector2(0, -448)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ShopCard" unique_id=2125979439]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CardContainer" type="HBoxContainer" parent="ShopCard/ScrollContainer" unique_id=430321421]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Region" type="Control" parent="." unique_id=859370454]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="BuyRegion" type="Control" parent="Region" unique_id=1517051887]
+anchors_preset = 0
+offset_left = -1528.0
+offset_right = 1704.0
+offset_bottom = 872.0
+mouse_filter = 2
+
+[node name="DeskRegion" type="Control" parent="Region" unique_id=453528617]
+anchors_preset = 0
+offset_left = -872.0
+offset_top = -216.0
+offset_right = 1048.0
+offset_bottom = 352.0
+mouse_filter = 2
+
+[node name="Cards" type="Control" parent="." unique_id=626131250]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -496.0
+offset_top = 280.0
+offset_right = -456.0
+offset_bottom = 320.0
+
+[node name="EndButton" type="Button" parent="." unique_id=1664365163]
+offset_left = 728.0
+offset_top = -504.0
+offset_right = 920.0
+offset_bottom = -408.0
+
+[node name="Label" type="Label" parent="EndButton" unique_id=1439581856]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "结束回合"
+
+[node name="Coin" type="Control" parent="." unique_id=548983700]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 784.0
+offset_top = 248.0
+offset_right = 864.0
+offset_bottom = 320.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Coin" unique_id=1930169831]
+
+[node name="CoinLabel" type="Label" parent="Coin" unique_id=17746250]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[connection signal="button_up" from="EndButton" to="ShopSceneManager" method="_on_end_button_button_up"]

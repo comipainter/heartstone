@@ -1,0 +1,105 @@
+[gd_scene format=3 uid="uid://c6282d1ntncbr"]
+
+[ext_resource type="Script" uid="uid://cfopv4r1nbs2t" path="res://minion/minion.gd" id="1_idad7"]
+[ext_resource type="Texture2D" uid="uid://bfklf2uqdewh0" path="res://icon.svg" id="2_isa10"]
+
+[node name="Minion" type="Control" unique_id=593908175]
+custom_minimum_size = Vector2(160, 240)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1920.0
+offset_bottom = -1080.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(80, 120)
+script = ExtResource("1_idad7")
+
+[node name="Panel" type="Panel" parent="." unique_id=1914012810]
+custom_minimum_size = Vector2(160, 240)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Panel" unique_id=1346524600]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Panel/ColorRect" unique_id=248459294]
+position = Vector2(80, 56)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_isa10")
+
+[node name="Button" type="Button" parent="Panel" unique_id=1921050302]
+self_modulate = Color(1, 1, 1, 0.22745098)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="NameLabel" type="Label" parent="Panel" unique_id=1927534673]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 96.0
+offset_right = 144.0
+offset_bottom = 119.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RaceLabel" type="Label" parent="Panel" unique_id=903084844]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 216.0
+offset_right = 104.0
+offset_bottom = 239.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AttackLabel" type="Label" parent="Panel" unique_id=704829359]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 208.0
+offset_right = 32.0
+offset_bottom = 231.0
+theme_override_colors/font_color = Color(0.57254905, 0, 0, 1)
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthLabel" type="Label" parent="Panel" unique_id=1280624557]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 208.0
+offset_right = 152.0
+offset_bottom = 231.0
+theme_override_colors/font_color = Color(0, 0.48235294, 0, 1)
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DescriptionLabel" type="Label" parent="Panel" unique_id=1355009718]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 136.0
+offset_right = 136.0
+offset_bottom = 208.0
+theme_override_colors/font_color = Color(0.3529412, 0.3529412, 0.3529412, 1)
+theme_override_font_sizes/font_size = 13
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[connection signal="button_down" from="Panel/Button" to="." method="_on_button_button_down"]
+[connection signal="button_up" from="Panel/Button" to="." method="_on_button_button_up"]

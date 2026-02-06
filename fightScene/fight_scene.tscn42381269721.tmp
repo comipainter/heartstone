@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://c7gevibljits3"]
+
+[ext_resource type="Script" uid="uid://bbq7l68v3rocn" path="res://fightScene/fight_scene_manager.gd" id="1_a5arp"]
+[ext_resource type="Script" uid="uid://i51qx77260f8" path="res://fightScene/enemy.gd" id="1_cnrxj"]
+[ext_resource type="Script" uid="uid://txyxqoesu8m6" path="res://fightScene/player.gd" id="2_s5eua"]
+
+[node name="FightScene" type="Node2D" unique_id=989947060]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1622706233]
+
+[node name="Enemy" type="Control" parent="." unique_id=43329969]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -800.0
+offset_top = -384.0
+offset_right = 744.0
+offset_bottom = -128.0
+script = ExtResource("1_cnrxj")
+initMinionNum = 5
+separationSize = 300
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Enemy" unique_id=118355554]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MinionContainer" type="HBoxContainer" parent="Enemy/ScrollContainer" unique_id=266100839]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Player" type="Control" parent="." unique_id=1686292081]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -800.0
+offset_top = 96.0
+offset_right = 744.0
+offset_bottom = 352.0
+script = ExtResource("2_s5eua")
+initMinionNum = 5
+separationSize = 300
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Player" unique_id=393707399]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MinionContainer" type="HBoxContainer" parent="Player/ScrollContainer" unique_id=1696648920]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Minions" type="Control" parent="." unique_id=1841747233]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="FightSceneManager" type="Control" parent="." unique_id=1422935586 node_paths=PackedStringArray("enemyNode", "playerNode", "minionsNode")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_a5arp")
+enemyNode = NodePath("../Enemy")
+playerNode = NodePath("../Player")
+minionsNode = NodePath("../Minions")

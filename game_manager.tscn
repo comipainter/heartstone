@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://b48lu5glc7xac"]
+
+[ext_resource type="Script" uid="uid://bs2gwp7frfbwx" path="res://game_manager.gd" id="1_70yv6"]
+
+[node name="GameManager" type="Control" unique_id=1903682549 node_paths=PackedStringArray("handCardNode", "DeskCardNode", "ShopCardNode", "BuyRegionNode")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_70yv6")
+handCardNode = NodePath("")
+DeskCardNode = NodePath("")
+ShopCardNode = NodePath("")
+BuyRegionNode = NodePath("")

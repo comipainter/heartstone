@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://ctv2780tefdwe"]
+
+[ext_resource type="PackedScene" uid="uid://c6282d1ntncbr" path="res://minion/minion.tscn" id="1_37kl0"]
+
+[node name="Node2D" type="Node2D" unique_id=458951913]
+
+[node name="Control" type="Control" parent="." unique_id=785263146]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Card" parent="." unique_id=593908175 node_paths=PackedStringArray("follow_target") instance=ExtResource("1_37kl0")]
+follow_target = NodePath("../Control")
