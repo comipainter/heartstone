@@ -60,7 +60,7 @@ func is_die() -> bool:
 func attack(target_minion) -> Signal:
 	var tween = create_tween()
 	
-	var original_pos = global_position
+	var original_pos = follow_target.global_position
 	var direction = (target_minion.global_position - original_pos).normalized()
 	var attack_offset = direction * 50
 
@@ -77,8 +77,7 @@ func attack(target_minion) -> Signal:
 	
 	# 加速回到原位
 	tween.set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
-	tween.tween_property(self, "global_position", original_pos, 0.5)
-	
+	tween.tween_property(self, "global_position", follow_target.global_position, 0.5)
 	return tween.finished
 
 # 受到伤害
@@ -110,7 +109,7 @@ func behit_animation() -> Signal:
 	tween.set_parallel(false)  # 顺序执行
 
 	# 定义旋转偏移序列（相对于原始角度）
-	var rotation_offsets = [-20, +20, -10, 0]
+	var rotation_offsets = [-20 , +20, -10, 0]
 	for offset in rotation_offsets:
 		tween.tween_property(self, "rotation_degrees", original_rotation + offset, 0.1)
 

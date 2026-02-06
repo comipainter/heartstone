@@ -67,7 +67,9 @@ func minion_die(leftMinion) -> void:
 	var leftMinionBox = leftMinion.get_follow_target()
 	minionContainerNode.remove_child(leftMinionBox)
 	leftMinionBox.queue_free()
-	# 使剩余卡牌开始跟随
+	follow()
+	
+func follow() -> void:
 	for minionInLiveList in minionLiveList:
 		minionInLiveList.set_move_follow()
 
@@ -75,7 +77,7 @@ func get_behit_minion() -> Node:
 	return minionLiveList[randi() % minionLiveList.size()]
 	
 func is_all_idle() -> bool:
-	for minion in minionList:
+	for minion in minionLiveList:
 		if not minion.is_idle():
 			return false	
 	return true

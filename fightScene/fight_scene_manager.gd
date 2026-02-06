@@ -5,8 +5,12 @@ class_name FightSceneManager
 @export var playerNode: Node
 @export var minionsNode: Node
 
-enum FIGHTSCENESTATE{PREPARE, FIGHT}
+enum FIGHTSCENESTATE{PREPARE, ATTACK, ATTACKING, AFTER_ATTACK, FOLLOWING}
 var fightSceneState = FIGHTSCENESTATE.PREPARE
+
+# 决定哪方先攻击
+var player_enemy_list = ["player", "enemy"]
+var curr = player_enemy_list[randi()%2]
 
 func _ready() -> void:
 	GameManager.fightScene = self
@@ -17,27 +21,39 @@ func _process(delta: float) -> void:
 	match fightSceneState:
 		FIGHTSCENESTATE.PREPARE:
 			if enemyNode.is_all_idle() and playerNode.is_all_idle():
-				fightSceneState = FIGHTSCENESTATE.FIGHT
-				start_fight()
-				
-func start_fight() -> void:
-	# 决定哪方先攻击
-	var player_enemy_list = ["player", "enemy"]
-	var curr = player_enemy_list[randi()%2]
-	while true:
-		# 先检查是否有一方随从全部退场
-		if playerNode.is_all_dead() or enemyNode.is_all_dead():
-			print("对战结束")
-			break
-		match curr:
-			"player":
-				# 当前玩家方随从先攻击
-				var behitMinion = enemyNode.get_behit_minion()
-				await playerNode.attack(behitMinion)
-				curr = "enemy"
-			"enemy":
-				# 当前敌方随从先攻击
-				var behitMinion = playerNode.get_behit_minion()
-				await enemyNode.attack(behitMinion)
-				curr = "player"
+				fightSceneState = FIGHTSCENESTATE.ATTACK
+		FIGHTSCENESTATE.ATTACK:
+			# 先检查是否有一方随从全部退场
+			if playerNode.is_all_dead() or enemyNode.is_all_dead():
+				print("对战结束")
+			else:
+				fightSceneState = FIGHTSCENESTATE.ATTACKING
+				match curr:
+					"player":
+						# 当前玩家方随从先攻击
+						var behitMinion = enemyNode.get_behit_minion()
+						await playerNode.attack(behitMinion)
+						curr = "enemy"
+					"enemy":
+						# 当前敌方随从先攻击
+						var behitMinion = playerNode.get_behit_minion()
+						await enemyNode.attack(behitMinion)
+						curr = "player"
+				fightSceneState = FIGHTSCENESTATE.AFTER_ATTACK
+		FIGHTSCENESTATE.ATTACKING:
+			pass
+		FIGHTSCENESTATE.AFTER_ATTACK:
+			fightSceneState = FIGHTSCENESTATE.FOLLOWING
+			playerNode.follow()
+			enemyNode.follow()
+		FIGHTSCENESTATE.FOLLOWING:
+			# 全部follow完毕，则允许下次攻击
+			if playerNode.is_all_idle() and enemyNode.is_all_idle():
+				fightSceneState = FIGHTSCENESTATE.ATTACK
+			
+func attack() -> void:
+	# 先检查是否有一方随从全部退场
+	if playerNode.is_all_dead() or enemyNode.is_all_dead():
+		print("对战结束")
+	
 	
