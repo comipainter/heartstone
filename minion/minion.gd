@@ -81,13 +81,46 @@ func attack(target_minion) -> Signal:
 	
 	return tween.finished
 
+# 受到伤害
 func take_damage(damage) -> void:
 	self.minionInfo["health"] -= damage
 	self.update_minionInfo()
 	await behit_animation()
-	if self.minionInfo["health"] < 0:
-		self.fightState = FIGHTSTATE.DEAD
-		#await die_animation()
+	
+# 检查是否死亡
+func check_health() -> bool:
+	if self.minionInfo["health"] <= 0:
+		return true
+	return false
+
+func die() -> Signal:
+	var tween = create_tween()
+	tween.tween_property(self, "scale", Vector2.ZERO, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+	tween.tween_property(self, "modulate:a", 0.0, 0.5).set_ease(Tween.EASE_IN)
+	tween.finished.connect(queue_free)
+	return tween.finished
+
+func behit_animation() -> Signal:
+	# 记录原始状态
+	var original_rotation = rotation_degrees
+	var original_scale = scale
+
+	# 创建 Tween
+	var tween = create_tween()
+	tween.set_parallel(false)  # 顺序执行
+
+	# 定义旋转偏移序列（相对于原始角度）
+	var rotation_offsets = [-20, +20, -10, 0]
+	for offset in rotation_offsets:
+		tween.tween_property(self, "rotation_degrees", original_rotation + offset, 0.1)
+
+	# 定义缩放序列（相对于原始缩放）
+	var scale_multipliers = [0.9, 1.1, 1.0]
+	for mult in scale_multipliers:
+		tween.tween_property(self, "scale", original_scale * mult, 0.1)
+
+	# 返回完成信号
+	return tween.finished
 
 # 逻辑方法
 func is_idle() -> bool:
@@ -132,28 +165,7 @@ func _on_button_button_up() -> void:
 		BELONGSTATE.DESK:
 			GameManager.shopScene.deskCardNode.resort_card(self)
 	self.set_move_follow()
-
-func behit_animation() -> Signal:
-	# 记录原始状态
-	var original_rotation = rotation_degrees
-	var original_scale = scale
-
-	# 创建 Tween
-	var tween = create_tween()
-	tween.set_parallel(false)  # 顺序执行
-
-	# 定义旋转偏移序列（相对于原始角度）
-	var rotation_offsets = [-20, +20, -10, 0]
-	for offset in rotation_offsets:
-		tween.tween_property(self, "rotation_degrees", original_rotation + offset, 0.1)
-
-	# 定义缩放序列（相对于原始缩放）
-	var scale_multipliers = [0.9, 1.1, 1.0]
-	for mult in scale_multipliers:
-		tween.tween_property(self, "scale", original_scale * mult, 0.1)
-
-	# 返回完成信号
-	return tween.finished
+	
 # 配置方法
 func set_minionInfo(minionInfo: Dictionary) -> void:
 	self.minionInfo = minionInfo

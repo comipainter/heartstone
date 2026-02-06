@@ -36,7 +36,7 @@ func generate_card() -> void:
 		minionLiveList.append(minion)
 
 func is_all_dead() -> bool:
-	for minion in minionList:
+	for minion in minionLiveList:
 		if not minion.is_die():
 			return false	
 	return true
@@ -50,6 +50,27 @@ func attack(behitMinion: Node) -> void:
 	# 触发最左侧随从的攻击逻辑
 	await leftMinion.attack(behitMinion)
 	
+	# 检查双方随从是否死亡，并且将死亡方法加入列表，在列表中并行死亡方法
+	var minion_die_tasks = []
+	if leftMinion.check_health():
+		minion_die(leftMinion)
+		minion_die_tasks.append(leftMinion.die())
+	if behitMinion.check_health():
+		GameManager.fightScene.enemyNode.minion_die(behitMinion)
+		minion_die_tasks.append(behitMinion.die())
+	for task in minion_die_tasks:
+		await task
+	
+func minion_die(leftMinion) -> void:
+	minionLiveList.erase(leftMinion)
+	# 先删除卡牌占位箱
+	var leftMinionBox = leftMinion.get_follow_target()
+	minionContainerNode.remove_child(leftMinionBox)
+	leftMinionBox.queue_free()
+	# 使剩余卡牌开始跟随
+	for minionInLiveList in minionLiveList:
+		minionInLiveList.set_move_follow()
+
 func get_behit_minion() -> Node:
 	return minionLiveList[randi() % minionLiveList.size()]
 	

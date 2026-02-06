@@ -11,6 +11,7 @@ class_name ShopSceneManager
 
 func _ready() -> void:
 	GameManager.shopScene = self
+	GameManager.player.start_shop()
 	
 func _on_end_button_button_up() -> void:
 	GameManager.end_shop()

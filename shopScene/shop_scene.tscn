@@ -4,10 +4,11 @@
 [ext_resource type="Script" uid="uid://bmqb0m7f33x86" path="res://shopScene/hand/hand_card.gd" id="2_hwlf8"]
 [ext_resource type="Script" uid="uid://k2f4c26qg6w8" path="res://shopScene/desk/desk_card.gd" id="3_iv8jd"]
 [ext_resource type="Script" uid="uid://k0ounsppxcwj" path="res://shopScene/shop/shop_card.gd" id="4_av8qb"]
+[ext_resource type="Script" uid="uid://ckjicqyc1dho4" path="res://shopScene/coin.gd" id="5_ldoku"]
 
 [node name="ShopScene" type="Node2D" unique_id=1443481585]
 
-[node name="ShopSceneManager" type="Control" parent="." unique_id=105537073 node_paths=PackedStringArray("handCardNode", "deskCardNode", "shopCardNode", "buyRegionNode", "deskRegionNode", "cardsNode")]
+[node name="ShopSceneManager" type="Control" parent="." unique_id=105537073 node_paths=PackedStringArray("handCardNode", "deskCardNode", "shopCardNode", "buyRegionNode", "deskRegionNode", "cardsNode", "coinLabelNode")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -19,6 +20,7 @@ shopCardNode = NodePath("../ShopCard")
 buyRegionNode = NodePath("../Region/BuyRegion")
 deskRegionNode = NodePath("../Region/DeskRegion")
 cardsNode = NodePath("../Cards")
+coinLabelNode = NodePath("../Coin")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1579174902]
 
@@ -149,19 +151,26 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 30
 text = "结束回合"
 
-[node name="Coin" type="Control" parent="." unique_id=548983700]
+[node name="Coin" type="Control" parent="." unique_id=548983700 node_paths=PackedStringArray("coinLabelNode")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 784.0
 offset_top = 248.0
 offset_right = 864.0
 offset_bottom = 320.0
+script = ExtResource("5_ldoku")
+coinLabelNode = NodePath("CoinLabel")
 
 [node name="Sprite2D" type="Sprite2D" parent="Coin" unique_id=1930169831]
 
 [node name="CoinLabel" type="Label" parent="Coin" unique_id=17746250]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 42
 
 [connection signal="button_up" from="EndButton" to="ShopSceneManager" method="_on_end_button_button_up"]

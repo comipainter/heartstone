@@ -26,7 +26,6 @@ static func load_allMinionInfo_from_csv(path) -> Dictionary:
 
 # 从其中随机选出一个随从的信息
 static func choose_random_minion(minionInfo: Dictionary) -> Dictionary:
-	var minionInfo_keys = minionInfo.keys()
-	var random_key = minionInfo_keys[randi() % minionInfo_keys.size()]
-	return minionInfo[random_key]
+	var random_key = minionInfo.keys().pick_random()
+	return minionInfo[random_key].duplicate()
 	
