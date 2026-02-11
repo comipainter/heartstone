@@ -58,3 +58,17 @@ func resort_card(card: Node) -> void:
 	# 使所有节点开始重新跟随
 	for cardInList in cardList:
 		cardInList.set_move_follow()
+		
+func remove_card(card: Node) -> void:
+	# 先删除卡牌占位箱
+	var cardBox = card.get_follow_target()
+	cardContainerNode.remove_child(cardBox)
+	cardBox.queue_free()
+	
+	card.set_move_idle()
+	card.set_belong_none()
+	# 从卡牌列表中删除
+	cardList.erase(card)
+	# 使剩余卡牌开始跟随
+	for cardInList in cardList:
+		cardInList.set_move_follow()

@@ -17,7 +17,6 @@ offset_right = 744.0
 offset_bottom = 560.0
 script = ExtResource("1_cnrxj")
 initMinionNum = 5
-separationSize = 300
 
 [node name="HandCard" type="Control" parent="Enemy" unique_id=987384089]
 anchors_preset = 0

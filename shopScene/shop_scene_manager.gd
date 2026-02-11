@@ -6,6 +6,7 @@ class_name ShopSceneManager
 @export var shopCardNode: Node
 @export var buyRegionNode: Node
 @export var deskRegionNode: Node
+@export var sellRegionNode: Node
 @export var cardsNode: Node
 @export var coinLabelNode: Node
 
@@ -43,7 +44,7 @@ func can_buy_minion() -> bool:
 		return false
 
 func buy_minion() -> void:
-	coinRest -= 3
+	coin_sub(3)
 	update_coin()
 	
 func can_buy_magic(cost: int) -> bool:
@@ -53,8 +54,20 @@ func can_buy_magic(cost: int) -> bool:
 		return false
 
 func buy_magic(cost: int) -> void:
-	coinRest -= cost
+	coin_sub(cost)
 	update_coin()
+	
+func sell_minion() -> void:
+	coin_add(1)
+	MinionToAnimation.check_sell(deskCardNode.cardList)
+	update_coin()
+	
+func coin_sub(delta: int) -> void:
+	coinRest -= delta
+	
+func coin_add(delta: int) -> void:
+	coinRest += delta
+	MinionToAnimation.check_coin_increase(deskCardNode.cardList)
 	
 func update_coin() -> void:
 	coinLabelNode.set_coin(coinRest, coinLimit)

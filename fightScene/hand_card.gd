@@ -15,6 +15,11 @@ func is_all_idle() -> bool:
 		if not card.is_idle():
 			return false
 	return true
+	
+func follow() -> void:
+	# 使所有节点开始重新跟随
+	for cardInList in cardList:
+		cardInList.set_move_follow()
 
 func generate_cards(handCardInfoList: Array) -> void:
 	for cardInfo in handCardInfoList:
@@ -40,10 +45,7 @@ func add_card(card: Node) -> void:
 
 	# 添加卡牌列表
 	cardList.append(card)
-	
-	# 使所有节点开始重新跟随
-	for cardInList in cardList:
-		cardInList.set_move_follow()
+	self.follow()
 
 func remove_card(card: Node) -> void:
 	# 先删除卡牌占位箱
@@ -55,6 +57,4 @@ func remove_card(card: Node) -> void:
 	card.set_belong_none()
 	# 从卡牌列表中删除
 	cardList.erase(card)
-	# 使剩余卡牌开始跟随
-	for cardInList in cardList:
-		cardInList.set_move_follow()
+	self.follow()

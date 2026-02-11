@@ -29,7 +29,7 @@ static func load_allMinionInfo_from_csv(path) -> Dictionary:
 # 从其中随机选出一个随从的信息
 static func choose_random_minion(minionInfo: Dictionary) -> Dictionary:
 	var random_key = minionInfo.keys().pick_random()
-	return minionInfo[random_key].duplicate()
+	return minionInfo[random_key].duplicate(true)
 
 # 从固定本数以下随机选出一个随从
 static func choose_random_minion_under_level(minionInfo: Dictionary, level: int) -> Dictionary:
@@ -42,7 +42,7 @@ static func choose_random_minion_under_level(minionInfo: Dictionary, level: int)
 		push_error("No minions found at level %d" % level)
 		return {}
 	var random_key = valid_keys.pick_random()
-	return minionInfo[random_key].duplicate()	
+	return minionInfo[random_key].duplicate(true)	
 
 # 从固定本数中随机选出一个随从
 static func choose_random_minion_in_level(minionInfo: Dictionary, level: int) -> Dictionary:
@@ -55,13 +55,13 @@ static func choose_random_minion_in_level(minionInfo: Dictionary, level: int) ->
 		push_error("No minions found at level %d" % level)
 		return {}
 	var random_key = valid_keys.pick_random()
-	return minionInfo[random_key].duplicate()
+	return minionInfo[random_key].duplicate(true)
 
 # 查询id随从
 static func get_minion_by_id(minionInfo: Dictionary, id: int) -> Dictionary:
 	for key in minionInfo.keys():
 		var minion = minionInfo[key]
 		if  minion["id"] == id:
-			return minion.duplicate()
+			return minion.duplicate(true)
 	push_error("Minion with id %d not found" % id)
 	return {}

@@ -13,10 +13,7 @@ func _ready() -> void:
 	minionContainerNode.add_theme_constant_override("separation", separationSize)
 	
 func is_all_dead() -> bool:
-	for minion in minionLiveList:
-		if not minion.is_die():
-			return false
-	return true
+	return minionLiveList.is_empty()
 	
 func get_left_minion() -> Node:
 	# 从在场随从列表中选择最左侧的随从
@@ -78,3 +75,10 @@ func remove_minion(minion: Node) -> void:
 	minionLiveList.erase(minion)
 	# 使剩余卡牌开始跟随
 	follow()
+
+func remove_die_minion() -> void:
+	for minionInLiveList in minionLiveList:
+		if minionInLiveList.check_health():
+			remove_minion(minionInLiveList)
+			minionInLiveList.die()
+			

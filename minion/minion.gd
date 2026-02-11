@@ -21,12 +21,8 @@ var moveState=MOVESTATE.IDLE
 enum BELONGSTATE{NONE, SHOP, HAND, DESK, FIGHT}
 var belongState=BELONGSTATE.SHOP
 
-# 随从战斗状态
-enum FIGHTSTATE{IDLE, ATTACK, BEHIT, DEAD}
-var fightState=FIGHTSTATE.IDLE
-
 # 随从动画队列
-var animation_queue = []
+var animationQueueManager = AnimationQueueManager.new()
 
 # 随从信息
 var minionInfo: Dictionary
@@ -43,6 +39,7 @@ func _ready():
 	use_minionInfo()
 
 func _process(delta: float) -> void:
+	animationQueueManager.play() # 启用动画播放
 	if is_entered and not is_hovering:
 		var elapsed = Time.get_ticks_msec() - hover_start_time
 		if elapsed >= HOVER_DURATION_MS:
@@ -66,40 +63,23 @@ func _process(delta: float) -> void:
 					velocity += force * delta
 					velocity *= (1.0 - damping)
 					global_position += velocity * delta
-# 战斗方法
-func is_die() -> bool:
-	if fightState == FIGHTSTATE.DEAD:
-		return true
-	return false
-	
-func attack(target_minion) -> Signal:
-	var tween = create_tween()
-	
-	var original_pos = follow_target.global_position
-	var direction = (target_minion.global_position - original_pos).normalized()
-	var attack_offset = direction * 50
+# 添加动画
+func add_animation(animation: CardAnimation) -> void:
+	animationQueueManager.add_animation(animation)
 
-	# 蓄力后向前突进
-	tween.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
-	tween.tween_property(self, "global_position", target_minion.global_position - attack_offset, 1)
-	
-	# 短暂停顿
-	tween.tween_callback(
-		func():
-			self.take_damage(target_minion.get_damage())
-			target_minion.take_damage(self.get_damage())
-	).set_delay(0.3)
-	
-	# 加速回到原位
-	tween.set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
-	tween.tween_property(self, "global_position", follow_target.global_position, 0.5)
-	return tween.finished
+func attack(behitMinion: Node) -> void:
+	self.add_animation(CardAnimation.AttackAnimation.new(self, behitMinion))
 
 # 受到伤害
 func take_damage(damage) -> void:
 	self.minionInfo["health"] -= damage
 	self.update_minionInfo()
-	await behit_animation()
+	
+# 增加身材
+func add_info(attack, health) -> void:
+	self.minionInfo["attack"] += attack
+	self.minionInfo["health"] += health
+	self.update_minionInfo()
 	
 # 检查是否死亡
 func check_health() -> bool:
@@ -107,34 +87,9 @@ func check_health() -> bool:
 		return true
 	return false
 
-func die() -> Signal:
-	var tween = create_tween()
-	tween.tween_property(self, "scale", Vector2.ZERO, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
-	tween.tween_property(self, "modulate:a", 0.0, 0.5).set_ease(Tween.EASE_IN)
-	tween.finished.connect(queue_free)
-	return tween.finished
-
-func behit_animation() -> Signal:
-	# 记录原始状态
-	var original_rotation = rotation_degrees
-	var original_scale = scale
-
-	# 创建 Tween
-	var tween = create_tween()
-	tween.set_parallel(false)  # 顺序执行
-
-	# 定义旋转偏移序列（相对于原始角度）
-	var rotation_offsets = [-20 , +20, -10, 0]
-	for offset in rotation_offsets:
-		tween.tween_property(self, "rotation_degrees", original_rotation + offset, 0.1)
-
-	# 定义缩放序列（相对于原始缩放）
-	var scale_multipliers = [0.9, 1.1, 1.0]
-	for mult in scale_multipliers:
-		tween.tween_property(self, "scale", original_scale * mult, 0.1)
-
-	# 返回完成信号
-	return tween.finished
+# 死亡方法
+func die() -> void:
+	self.add_animation(CardAnimation.DieAnimation.new(self))
 
 # 逻辑方法
 func hover() -> void:
@@ -151,7 +106,8 @@ func hover() -> void:
 	
 func is_idle() -> bool:
 	if self.moveState == MOVESTATE.IDLE:
-		return true
+		if self.animationQueueManager.is_idle():
+			return true
 	return false
 
 func update_minionInfo() -> void:
@@ -163,9 +119,12 @@ func is_in_buy_region() -> bool:
 	
 func is_in_desk_region() -> bool:
 	return GameManager.is_in_region(GameManager.shopScene.deskRegionNode, self)
+	
+func is_in_sell_region() -> bool:
+	return GameManager.is_in_region(GameManager.shopScene.sellRegionNode, self)
 
 func _on_button_button_down() -> void:
-	if belongState == BELONGSTATE.FIGHT:
+	if belongState == BELONGSTATE.FIGHT: # 战斗状态避免拖拽
 		return
 	is_entered = false # 点击后不能查看卡牌信息
 	self.set_move_drag()
@@ -190,7 +149,11 @@ func _on_button_button_up() -> void:
 				GameManager.shopScene.deskCardNode.add_card(self)
 				GameManager.shopScene.deskCardNode.resort_card(self)
 		BELONGSTATE.DESK:
-			GameManager.shopScene.deskCardNode.resort_card(self)
+			if is_in_sell_region() == true:
+				self.add_animation(CardAnimation.SellAnimation.new())
+				self.add_animation(CardAnimation.RemoveAnimation.new(self, GameManager.shopScene.deskCardNode))
+			else:
+				GameManager.shopScene.deskCardNode.resort_card(self)
 	self.set_move_follow()
 	
 func _on_button_mouse_entered() -> void:
@@ -207,6 +170,9 @@ func _on_button_mouse_exited() -> void:
 # 配置方法 
 func get_cardInfo() -> Dictionary:
 	return self.minionInfo
+	
+func get_id() -> int:
+	return self.minionInfo["id"]
 
 func set_cardInfo(cardInfo: Dictionary) -> void:
 	self.minionInfo = cardInfo
@@ -223,7 +189,7 @@ func use_minionInfo_level() -> void:
 	self.levelSprite.texture = GameManager.levelSpriteTemplate[self.minionInfo["level"]]
 	self.levelSprite.scale = GameManager.levelSpriteScale[self.minionInfo["level"]]
 
-func get_damage() -> int:
+func get_attack() -> int:
 	return self.minionInfo["attack"]
 
 func set_follow_target(target: Node) -> void:

@@ -10,7 +10,7 @@
 
 [node name="ShopScene" type="Node2D" unique_id=1443481585]
 
-[node name="ShopSceneManager" type="Control" parent="." unique_id=105537073 node_paths=PackedStringArray("handCardNode", "deskCardNode", "shopCardNode", "buyRegionNode", "deskRegionNode", "cardsNode", "coinLabelNode")]
+[node name="ShopSceneManager" type="Control" parent="." unique_id=105537073 node_paths=PackedStringArray("handCardNode", "deskCardNode", "shopCardNode", "buyRegionNode", "deskRegionNode", "sellRegionNode", "cardsNode", "coinLabelNode")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -21,6 +21,7 @@ deskCardNode = NodePath("../DeskCard")
 shopCardNode = NodePath("../ShopCard")
 buyRegionNode = NodePath("../Region/BuyRegion")
 deskRegionNode = NodePath("../Region/DeskRegion")
+sellRegionNode = NodePath("../Region/SellRegion")
 cardsNode = NodePath("../Cards")
 coinLabelNode = NodePath("../Coin")
 
@@ -103,9 +104,9 @@ alignment = 1
 [node name="LevelUp" type="Control" parent="ShopCard" unique_id=161942230]
 anchors_preset = 0
 offset_left = 1696.0
-offset_top = 304.0
+offset_top = 176.0
 offset_right = 1824.0
-offset_bottom = 424.0
+offset_bottom = 296.0
 
 [node name="Sprite2D" type="Sprite2D" parent="ShopCard/LevelUp" unique_id=1459158419]
 position = Vector2(2.7656555e-05, -1.3113022e-06)
@@ -135,9 +136,9 @@ flat = true
 [node name="Fresh" type="Control" parent="ShopCard" unique_id=917981440]
 anchors_preset = 0
 offset_left = 1632.0
-offset_top = 464.0
+offset_top = 336.0
 offset_right = 1672.0
-offset_bottom = 504.0
+offset_bottom = 376.0
 
 [node name="Sprite2D" type="Sprite2D" parent="ShopCard/Fresh" unique_id=787929891]
 position = Vector2(64.000015, 31.999994)
@@ -182,6 +183,14 @@ offset_left = -1408.0
 offset_top = -216.0
 offset_right = 1384.0
 offset_bottom = 352.0
+mouse_filter = 2
+
+[node name="SellRegion" type="Control" parent="Region" unique_id=44556165]
+anchors_preset = 0
+offset_left = -1528.0
+offset_top = -912.0
+offset_right = 1536.0
+offset_bottom = -448.0
 mouse_filter = 2
 
 [node name="Cards" type="Control" parent="." unique_id=626131250]

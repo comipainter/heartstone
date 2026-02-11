@@ -71,6 +71,8 @@ var fightScene: FightSceneManager
 enum GAMESTATE{START, MENU, MENUING, LEVEL, LEVELING, SHOP, SHOPPING, FIGHT, FIGHTING}
 var gameState = GAMESTATE.MENU
 
+# 动画相关
+
 func _process(delta: float) -> void:
 	match gameState:
 		GAMESTATE.MENU:
@@ -106,7 +108,7 @@ func end_level(levelType: LEVELTYPE) -> void:
 			gameState = GAMESTATE.FIGHT
 		elif levelType == LEVELTYPE.SHOP:
 			# 先设置好金币
-			self.startCoin = 10
+			self.startCoin = 100
 			self.startCoinLimit = 10
 			coinRest = startCoin
 			coinLimit = startCoinLimit
