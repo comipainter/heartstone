@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bycmhki0a6f7e"]
+
+[ext_resource type="Texture2D" uid="uid://cn5s3qu28wt2g" path="res://assets/image/ic_local_grocery_store_128_28460.webp" id="1_oytiq"]
+
+[node name="Shop" type="Control" unique_id=1989557514]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -2448.0
+offset_bottom = -1328.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2125190586]
+position = Vector2(56, 56)
+texture = ExtResource("1_oytiq")

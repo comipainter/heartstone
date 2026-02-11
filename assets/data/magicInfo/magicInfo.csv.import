@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://brbqolsnaikr3"
+
+[deps]
+
+files=["res://assets/data/magicInfo/magicInfo.level.translation", "res://assets/data/magicInfo/magicInfo.magic.translation", "res://assets/data/magicInfo/magicInfo.cost.translation", "res://assets/data/magicInfo/magicInfo.description.translation"]
+
+source_file="res://assets/data/magicInfo/magicInfo.csv"
+dest_files=["res://assets/data/magicInfo/magicInfo.level.translation", "res://assets/data/magicInfo/magicInfo.magic.translation", "res://assets/data/magicInfo/magicInfo.cost.translation", "res://assets/data/magicInfo/magicInfo.description.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

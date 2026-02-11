@@ -3,9 +3,9 @@ class_name FightSceneManager
 
 @export var enemyNode: Node
 @export var playerNode: Node
-@export var minionsNode: Node
+@export var cardsNode: Node
 
-enum FIGHTSCENESTATE{PREPARE, ATTACK, ATTACKING, AFTER_ATTACK, FOLLOWING}
+enum FIGHTSCENESTATE{PREPARE, ATTACK, ATTACKING, AFTER_ATTACK, FOLLOWING, END}
 var fightSceneState = FIGHTSCENESTATE.PREPARE
 
 # 决定哪方先攻击
@@ -14,8 +14,11 @@ var curr = player_enemy_list[randi()%2]
 
 func _ready() -> void:
 	GameManager.fightScene = self
-	enemyNode.generate_card()
-	playerNode.generate_card()
+	
+	await get_tree().process_frame
+	
+	enemyNode.generate_cards()
+	playerNode.generate_cards()
 	
 func _process(delta: float) -> void:
 	match fightSceneState:
@@ -24,8 +27,14 @@ func _process(delta: float) -> void:
 				fightSceneState = FIGHTSCENESTATE.ATTACK
 		FIGHTSCENESTATE.ATTACK:
 			# 先检查是否有一方随从全部退场
-			if playerNode.is_all_dead() or enemyNode.is_all_dead():
-				print("对战结束")
+			if playerNode.is_all_dead():
+				fightSceneState = FIGHTSCENESTATE.END
+				print("对战结束, 敌方胜利")
+				GameManager.end_fight()
+			elif enemyNode.is_all_dead():
+				fightSceneState = FIGHTSCENESTATE.END
+				print("对战结束, 玩家胜利")	
+				GameManager.end_fight()
 			else:
 				fightSceneState = FIGHTSCENESTATE.ATTACKING
 				match curr:

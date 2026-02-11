@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ctv2780tefdwe"]
 
-[ext_resource type="PackedScene" uid="uid://c6282d1ntncbr" path="res://minion/minion.tscn" id="1_37kl0"]
+[ext_resource type="PackedScene" uid="uid://c6282d1ntncbr" path="res://minion/origin_minion.tscn" id="1_37kl0"]
 
 [node name="Node2D" type="Node2D" unique_id=458951913]
 

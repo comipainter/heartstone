@@ -1,10 +1,12 @@
 [gd_scene format=3 uid="uid://bi56xbefwrvfp"]
 
 [ext_resource type="Script" uid="uid://bwhpip660m6fo" path="res://shopScene/shop_scene_manager.gd" id="1_gk4dr"]
-[ext_resource type="Script" uid="uid://bmqb0m7f33x86" path="res://shopScene/hand/hand_card.gd" id="2_hwlf8"]
-[ext_resource type="Script" uid="uid://k2f4c26qg6w8" path="res://shopScene/desk/desk_card.gd" id="3_iv8jd"]
-[ext_resource type="Script" uid="uid://k0ounsppxcwj" path="res://shopScene/shop/shop_card.gd" id="4_av8qb"]
+[ext_resource type="Script" uid="uid://bmqb0m7f33x86" path="res://shopScene/hand_card.gd" id="2_hwlf8"]
+[ext_resource type="Script" uid="uid://k2f4c26qg6w8" path="res://shopScene/desk_card.gd" id="3_iv8jd"]
+[ext_resource type="Script" uid="uid://k0ounsppxcwj" path="res://shopScene/shop_card.gd" id="4_av8qb"]
 [ext_resource type="Script" uid="uid://ckjicqyc1dho4" path="res://shopScene/coin.gd" id="5_ldoku"]
+[ext_resource type="Texture2D" uid="uid://yst6x2814cwj" path="res://assets/image/LevelUp.png" id="5_tadgs"]
+[ext_resource type="Texture2D" uid="uid://d2fecpokhc5hw" path="res://assets/image/arrow_load_update_sync_loading_reload_refresh_icon_267799.webp" id="6_nf4b3"]
 
 [node name="ShopScene" type="Node2D" unique_id=1443481585]
 
@@ -27,10 +29,10 @@ coinLabelNode = NodePath("../Coin")
 [node name="HandCard" type="Control" parent="." unique_id=1806533940]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -640.0
-offset_top = 280.0
-offset_right = 456.0
-offset_bottom = 472.0
+offset_left = -576.0
+offset_top = 448.0
+offset_right = 520.0
+offset_bottom = 640.0
 script = ExtResource("2_hwlf8")
 separationSize = 200
 
@@ -51,10 +53,10 @@ alignment = 1
 [node name="DeskCard" type="Control" parent="." unique_id=284309087]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -768.0
-offset_top = -112.0
-offset_right = 648.0
-offset_bottom = 248.0
+offset_left = -728.0
+offset_top = -184.0
+offset_right = 688.0
+offset_bottom = 176.0
 script = ExtResource("3_iv8jd")
 separationSize = 300
 
@@ -75,13 +77,12 @@ alignment = 1
 [node name="ShopCard" type="Control" parent="." unique_id=453085835]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -688.0
-offset_top = -432.0
-offset_right = 624.0
-offset_bottom = -192.0
+offset_left = -672.0
+offset_top = -560.0
+offset_right = 640.0
+offset_bottom = -320.0
 mouse_filter = 2
 script = ExtResource("4_av8qb")
-initCardNum = 5
 separationSize = 300
 cardStartPosition = Vector2(0, -448)
 
@@ -99,6 +100,68 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
 
+[node name="LevelUp" type="Control" parent="ShopCard" unique_id=161942230]
+anchors_preset = 0
+offset_left = 1696.0
+offset_top = 304.0
+offset_right = 1824.0
+offset_bottom = 424.0
+
+[node name="Sprite2D" type="Sprite2D" parent="ShopCard/LevelUp" unique_id=1459158419]
+position = Vector2(2.7656555e-05, -1.3113022e-06)
+scale = Vector2(0.56, 0.56000006)
+texture = ExtResource("5_tadgs")
+
+[node name="CostLabel" type="Label" parent="ShopCard/LevelUp" unique_id=605673764]
+layout_mode = 0
+offset_left = 88.0
+offset_top = -32.0
+offset_right = 128.0
+offset_bottom = 32.0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelButton" type="Button" parent="ShopCard/LevelUp" unique_id=1454022101]
+layout_mode = 0
+offset_left = -72.0
+offset_top = -72.0
+offset_right = 192.0
+offset_bottom = 72.0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+flat = true
+
+[node name="Fresh" type="Control" parent="ShopCard" unique_id=917981440]
+anchors_preset = 0
+offset_left = 1632.0
+offset_top = 464.0
+offset_right = 1672.0
+offset_bottom = 504.0
+
+[node name="Sprite2D" type="Sprite2D" parent="ShopCard/Fresh" unique_id=787929891]
+position = Vector2(64.000015, 31.999994)
+scale = Vector2(1.166667, 1.1666666)
+texture = ExtResource("6_nf4b3")
+
+[node name="CostLabel" type="Label" parent="ShopCard/Fresh" unique_id=48598339]
+layout_mode = 0
+offset_left = 144.0
+offset_right = 184.0
+offset_bottom = 64.0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "1"
+
+[node name="FreshButton" type="Button" parent="ShopCard/Fresh" unique_id=1783389085]
+layout_mode = 0
+offset_left = -8.0
+offset_top = -40.0
+offset_right = 256.0
+offset_bottom = 104.0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+flat = true
+
 [node name="Region" type="Control" parent="." unique_id=859370454]
 layout_mode = 3
 anchors_preset = 0
@@ -108,16 +171,16 @@ mouse_filter = 2
 
 [node name="BuyRegion" type="Control" parent="Region" unique_id=1517051887]
 anchors_preset = 0
-offset_left = -1528.0
+offset_left = -1656.0
 offset_right = 1704.0
-offset_bottom = 872.0
+offset_bottom = 960.0
 mouse_filter = 2
 
 [node name="DeskRegion" type="Control" parent="Region" unique_id=453528617]
 anchors_preset = 0
-offset_left = -872.0
+offset_left = -1408.0
 offset_top = -216.0
-offset_right = 1048.0
+offset_right = 1384.0
 offset_bottom = 352.0
 mouse_filter = 2
 
@@ -130,10 +193,10 @@ offset_right = -456.0
 offset_bottom = 320.0
 
 [node name="EndButton" type="Button" parent="." unique_id=1664365163]
-offset_left = 728.0
-offset_top = -504.0
-offset_right = 920.0
-offset_bottom = -408.0
+offset_left = 960.0
+offset_top = -640.0
+offset_right = 1152.0
+offset_bottom = -544.0
 
 [node name="Label" type="Label" parent="EndButton" unique_id=1439581856]
 layout_mode = 1
@@ -154,10 +217,10 @@ text = "结束回合"
 [node name="Coin" type="Control" parent="." unique_id=548983700 node_paths=PackedStringArray("coinLabelNode")]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 784.0
-offset_top = 248.0
-offset_right = 864.0
-offset_bottom = 320.0
+offset_left = 1032.0
+offset_top = 312.0
+offset_right = 1112.0
+offset_bottom = 384.0
 script = ExtResource("5_ldoku")
 coinLabelNode = NodePath("CoinLabel")
 
@@ -173,4 +236,6 @@ grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 0, 1)
 theme_override_font_sizes/font_size = 42
 
+[connection signal="button_up" from="ShopCard/LevelUp/LevelButton" to="ShopCard" method="_on_level_button_button_up"]
+[connection signal="button_up" from="ShopCard/Fresh/FreshButton" to="ShopCard" method="_on_fresh_button_button_up"]
 [connection signal="button_up" from="EndButton" to="ShopSceneManager" method="_on_end_button_button_up"]

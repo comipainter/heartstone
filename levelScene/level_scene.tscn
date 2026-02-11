@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://bwc8y38emfne1"]
+
+[ext_resource type="Script" uid="uid://cackekr40sfta" path="res://level_scene_manager.gd" id="1_fqjem"]
+[ext_resource type="Script" uid="uid://ddbeq3xays0so" path="res://levels.gd" id="2_rkm05"]
+
+[node name="LevelScene" type="Node2D" unique_id=1934914860]
+
+[node name="LevelSceneManager" type="Control" parent="." unique_id=1238512495 node_paths=PackedStringArray("levelsNode")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_fqjem")
+levelsNode = NodePath("../Levels")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2055741093]
+
+[node name="Levels" type="Control" parent="." unique_id=204209586 node_paths=PackedStringArray("linesNode", "levelContainerNode")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -704.0
+offset_top = -192.0
+offset_right = -664.0
+offset_bottom = -152.0
+script = ExtResource("2_rkm05")
+linesNode = NodePath("Lines")
+levelContainerNode = NodePath("ScrollContainer/LevelContainer")
+separationSize = 200
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Levels" unique_id=1654638847]
+layout_mode = 0
+offset_right = 1408.0
+offset_bottom = 384.0
+
+[node name="LevelContainer" type="HBoxContainer" parent="Levels/ScrollContainer" unique_id=1198650841]
+layout_mode = 2
+alignment = 1
+
+[node name="Lines" type="Control" parent="Levels" unique_id=674317101]
+anchors_preset = 0
+offset_left = 704.0
+offset_top = 192.0
+offset_right = 744.0
+offset_bottom = 232.0
+
+[node name="EndButton" type="Button" parent="." unique_id=486476582]
+offset_left = 960.0
+offset_top = -640.0
+offset_right = 1152.0
+offset_bottom = -544.0
+
+[node name="Label" type="Label" parent="EndButton" unique_id=1689049896]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "下一关卡"
+
+[connection signal="button_up" from="EndButton" to="LevelSceneManager" method="_on_end_button_button_up"]

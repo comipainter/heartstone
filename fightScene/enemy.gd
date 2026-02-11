@@ -2,82 +2,47 @@ extends Control
 
 @export var initMinionNum: int
 @export var separationSize: int
-@export var minionStartPosition: Vector2
-@onready var minionContainerNode = $ScrollContainer/MinionContainer
-@onready var minionTemplate = GameManager.minionTemplate
+@onready var handCardNode = $HandCard
+@onready var deskCardNode = $DeskCard
 
 var minionList = []
 var minionLiveList = []
 
-func _ready() -> void:
-	minionContainerNode.add_theme_constant_override("separation", separationSize)
-
-func generate_card() -> void:
+func generate_cards() -> void:
+	var deskCardInfoList = []
 	for i in range(initMinionNum):
-		# 先添加随从占位箱
-		var minionBox = Control.new()
-		minionContainerNode.add_child(minionBox)
-		
-		# 再创建随从，使其跟随占位箱
-		var minion = minionTemplate.instantiate()
-		minion.set_follow_target(minionBox)
-		
-		# 添加随从信息
 		var randomMinionInfo = MinionInfo.choose_random_minion(GameManager.allMinionInfo)
-		minion.set_minionInfo(randomMinionInfo)
-		
-		minion.set_move_follow()
-		minion.set_belong_fight()
-		GameManager.fightScene.minionsNode.add_child(minion)
-		minion.global_position = minionStartPosition
-		
-		# 加入随从列表
-		minionList.append(minion)
-		minionLiveList.append(minion)
-		
+		deskCardInfoList.append(randomMinionInfo)
+	deskCardNode.generate_cards(deskCardInfoList)
+
 func is_all_dead() -> bool:
-	for minion in minionLiveList:
-		if not minion.is_die():
-			return false	
-	return true
+	return deskCardNode.is_all_dead()
+	
+func follow() -> void:
+	deskCardNode.follow()
+	
+func get_behit_minion() -> Node:
+	return deskCardNode.get_behit_minion()
+	
+func is_all_idle() -> bool:
+	if deskCardNode.is_all_idle():
+		if handCardNode.is_all_idle():
+			return true
+	return false
 	
 func attack(behitMinion: Node) -> void:
 	# 从在场随从列表中选择最左侧的随从
-	var leftMinion = minionLiveList[0]
-	for minion in minionLiveList:
-		if (minion.global_position < leftMinion.global_position):
-			leftMinion = minion
+	var leftMinion = deskCardNode.get_left_minion()
 	# 触发最左侧随从的攻击逻辑
 	await leftMinion.attack(behitMinion)
 	
 	# 检查双方随从是否死亡，并且将死亡方法加入列表，在列表中并行死亡方法
 	var minion_die_tasks = []
 	if leftMinion.check_health():
-		minion_die(leftMinion)
+		deskCardNode.remove_minion(leftMinion)
 		minion_die_tasks.append(leftMinion.die())
 	if behitMinion.check_health():
-		GameManager.fightScene.playerNode.minion_die(behitMinion)
+		GameManager.fightScene.playerNode.deskCardNode.remove_minion(behitMinion)
 		minion_die_tasks.append(behitMinion.die())
 	for task in minion_die_tasks:
 		await task
-
-func minion_die(leftMinion) -> void:
-	minionLiveList.erase(leftMinion)
-	# 先删除卡牌占位箱
-	var leftMinionBox = leftMinion.get_follow_target()
-	minionContainerNode.remove_child(leftMinionBox)
-	leftMinionBox.queue_free()
-	follow()
-	
-func follow() -> void:
-	for minionInLiveList in minionLiveList:
-		minionInLiveList.set_move_follow()
-		
-func get_behit_minion() -> Node:
-	return minionLiveList[randi() % minionLiveList.size()]
-	
-func is_all_idle() -> bool:
-	for minion in minionLiveList:
-		if not minion.is_idle():
-			return false	
-	return true

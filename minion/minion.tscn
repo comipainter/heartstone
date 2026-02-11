@@ -1,45 +1,92 @@
-[gd_scene format=3 uid="uid://c6282d1ntncbr"]
+[gd_scene format=3 uid="uid://cu8vnauiqoog6"]
 
+[ext_resource type="Texture2D" uid="uid://ds3dfbhf58khx" path="res://assets/image/minion/background.png" id="1_5ekhe"]
 [ext_resource type="Script" uid="uid://cfopv4r1nbs2t" path="res://minion/minion.gd" id="1_idad7"]
-[ext_resource type="Texture2D" uid="uid://bfklf2uqdewh0" path="res://icon.svg" id="2_isa10"]
+[ext_resource type="Texture2D" uid="uid://dbxrbymdmv627" path="res://assets/image/minion/blood.png" id="2_s18as"]
+[ext_resource type="Texture2D" uid="uid://dlbmao5yd3pdr" path="res://assets/image/minion/2.png" id="3_njykw"]
+[ext_resource type="Texture2D" uid="uid://bwgvjxfe5fc1p" path="res://assets/image/minion/attack.png" id="3_q51ak"]
+[ext_resource type="Shader" uid="uid://bdaihd3hdmkvg" path="res://minion/minion.gdshader" id="6_v2o2k"]
 
-[node name="Minion" type="Control" unique_id=593908175]
-custom_minimum_size = Vector2(160, 240)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_njykw"]
+shader = ExtResource("6_v2o2k")
+shader_parameter/ellipse_center = Vector2(0.5, 0.5)
+shader_parameter/ellipse_scale_x = 0.49600002030012
+shader_parameter/ellipse_scale_y = 0.49600002030012
+shader_parameter/global_scale = 1.0
+
+[node name="Minion" type="Control" unique_id=301906188]
+custom_minimum_size = Vector2(192, 256)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -1920.0
-offset_bottom = -1080.0
+offset_right = -2368.0
+offset_bottom = -1184.0
 grow_horizontal = 2
 grow_vertical = 2
-pivot_offset = Vector2(80, 120)
 script = ExtResource("1_idad7")
 
-[node name="Panel" type="Panel" parent="." unique_id=1914012810]
-custom_minimum_size = Vector2(160, 240)
+[node name="Sprite" type="Control" parent="." unique_id=635141842]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MinionSprite" type="Sprite2D" parent="Sprite" unique_id=1264050649]
+material = SubResource("ShaderMaterial_njykw")
+position = Vector2(96, 127.999985)
+scale = Vector2(0.22222222, 0.22222222)
+texture = ExtResource("3_njykw")
+
+[node name="BackgroundSprite" type="Sprite2D" parent="Sprite" unique_id=767979981]
+position = Vector2(96, 128.00002)
+scale = Vector2(0.14723925, 0.13913043)
+texture = ExtResource("1_5ekhe")
+
+[node name="BloodSprite" type="Sprite2D" parent="Sprite" unique_id=788283125]
+position = Vector2(172, 224)
+scale = Vector2(0.08988762, 0.09005282)
+texture = ExtResource("2_s18as")
+
+[node name="AttackSprite" type="Sprite2D" parent="Sprite" unique_id=1102716555]
+position = Vector2(27.999998, 224)
+scale = Vector2(0.109375, 0.125)
+texture = ExtResource("3_q51ak")
+
+[node name="AttackLabel" type="Label" parent="." unique_id=1906363349]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
+anchors_preset = 2
+anchor_top = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = 8.0
+offset_top = -40.0
+offset_right = 32.0
+offset_bottom = -8.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.99983984, 0.35397863, 0.2870314, 1)
+theme_override_constants/outline_size = 15
+theme_override_font_sizes/font_size = 30
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="ColorRect" type="ColorRect" parent="Panel" unique_id=1346524600]
+[node name="HealthLabel" type="Label" parent="." unique_id=459356402]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
+anchors_preset = 2
+anchor_top = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
+offset_left = 146.0
+offset_top = -48.0
+offset_right = 197.0
+offset_bottom = -6.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(1.4920532e-06, 0.8049035, 1.92523e-06, 1)
+theme_override_constants/outline_size = 15
+theme_override_font_sizes/font_size = 30
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Sprite2D" type="Sprite2D" parent="Panel/ColorRect" unique_id=248459294]
-position = Vector2(80, 56)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_isa10")
-
-[node name="Button" type="Button" parent="Panel" unique_id=1921050302]
+[node name="Button" type="Button" parent="." unique_id=1058964522]
 self_modulate = Color(1, 1, 1, 0.22745098)
 layout_mode = 1
 anchors_preset = 15
@@ -47,61 +94,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-metadata/_edit_use_anchors_ = true
+flat = true
 
-[node name="NameLabel" type="Label" parent="Panel" unique_id=1927534673]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 96.0
-offset_right = 144.0
-offset_bottom = 119.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="RaceLabel" type="Label" parent="Panel" unique_id=903084844]
-layout_mode = 0
-offset_left = 64.0
-offset_top = 216.0
-offset_right = 104.0
-offset_bottom = 239.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="AttackLabel" type="Label" parent="Panel" unique_id=704829359]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 208.0
-offset_right = 32.0
-offset_bottom = 231.0
-theme_override_colors/font_color = Color(0.57254905, 0, 0, 1)
-theme_override_font_sizes/font_size = 20
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HealthLabel" type="Label" parent="Panel" unique_id=1280624557]
-layout_mode = 0
-offset_left = 128.0
-offset_top = 208.0
-offset_right = 152.0
-offset_bottom = 231.0
-theme_override_colors/font_color = Color(0, 0.48235294, 0, 1)
-theme_override_font_sizes/font_size = 20
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="DescriptionLabel" type="Label" parent="Panel" unique_id=1355009718]
-layout_mode = 0
-offset_left = 24.0
-offset_top = 136.0
-offset_right = 136.0
-offset_bottom = 208.0
-theme_override_colors/font_color = Color(0.3529412, 0.3529412, 0.3529412, 1)
-theme_override_font_sizes/font_size = 13
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 2
-
-[connection signal="button_down" from="Panel/Button" to="." method="_on_button_button_down"]
-[connection signal="button_up" from="Panel/Button" to="." method="_on_button_button_up"]
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
+[connection signal="button_up" from="Button" to="." method="_on_button_button_up"]
+[connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="Button" to="." method="_on_button_mouse_exited"]

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://lxcdl8xf7t8k"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_njulo"]
+load_path = "res://.godot/imported/battle_game_sword_fight_weapon_gift_token_war_power_icon_262404.webp-8baad390e6f7888dcab824cd3ff910e5.ctex"
+
+[node name="Battle" type="Control" unique_id=1043652293]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -2448.0
+offset_bottom = -1328.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=621184374]
+position = Vector2(56, 56)
+texture = SubResource("CompressedTexture2D_njulo")

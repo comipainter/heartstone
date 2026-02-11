@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://3cvewl28psv7"]
+
+[ext_resource type="Script" uid="uid://bkt1q7vdb2gao" path="res://magic/magic.gd" id="1_xc1r2"]
+[ext_resource type="Texture2D" uid="uid://dr8te1kykomu7" path="res://assets/image/if-destructive-magic-2913121_88811.webp" id="2_xc1r2"]
+
+[node name="Magic" type="Control" unique_id=2100943558]
+custom_minimum_size = Vector2(192, 256)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -2368.0
+offset_bottom = -1184.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xc1r2")
+
+[node name="Panel" type="Panel" parent="." unique_id=1767267476]
+custom_minimum_size = Vector2(160, 240)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Panel" unique_id=1310901930]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Panel/ColorRect" unique_id=987133994]
+position = Vector2(95.99999, 80)
+scale = Vector2(1.0026041, 0.96354175)
+texture = ExtResource("2_xc1r2")
+
+[node name="Button" type="Button" parent="Panel" unique_id=661680134]
+self_modulate = Color(1, 1, 1, 0.22745098)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NameLabel" type="Label" parent="Panel" unique_id=1040719402]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 136.0
+offset_right = 160.0
+offset_bottom = 159.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CostLabel" type="Label" parent="Panel" unique_id=927165040]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 32.0
+offset_bottom = 36.0
+theme_override_colors/font_color = Color(0.49864662, 0.4986465, 3.85046e-07, 1)
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DescriptionLabel" type="Label" parent="Panel" unique_id=683351135]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 168.0
+offset_right = 152.0
+offset_bottom = 240.0
+theme_override_colors/font_color = Color(0.3529412, 0.3529412, 0.3529412, 1)
+theme_override_font_sizes/font_size = 13
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[connection signal="button_down" from="Panel/Button" to="." method="_on_button_button_down"]
+[connection signal="button_up" from="Panel/Button" to="." method="_on_button_button_up"]

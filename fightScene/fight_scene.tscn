@@ -3,23 +3,32 @@
 [ext_resource type="Script" uid="uid://bbq7l68v3rocn" path="res://fightScene/fight_scene_manager.gd" id="1_a5arp"]
 [ext_resource type="Script" uid="uid://i51qx77260f8" path="res://fightScene/enemy.gd" id="1_cnrxj"]
 [ext_resource type="Script" uid="uid://txyxqoesu8m6" path="res://fightScene/player.gd" id="2_s5eua"]
+[ext_resource type="Script" uid="uid://dc43p16gpvhwb" path="res://fightScene/hand_card.gd" id="3_j555q"]
+[ext_resource type="Script" uid="uid://b0puudv28vtkh" path="res://fightScene/desk_card.gd" id="4_7obaq"]
 
 [node name="FightScene" type="Node2D" unique_id=989947060]
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1622706233]
-
-[node name="Enemy" type="Control" parent="." unique_id=43329969]
+[node name="Enemy" type="Control" parent="." unique_id=620350666]
 layout_mode = 3
 anchors_preset = 0
 offset_left = -800.0
-offset_top = -384.0
+offset_top = 304.0
 offset_right = 744.0
-offset_bottom = -128.0
+offset_bottom = 560.0
 script = ExtResource("1_cnrxj")
 initMinionNum = 5
 separationSize = 300
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Enemy" unique_id=118355554]
+[node name="HandCard" type="Control" parent="Enemy" unique_id=987384089]
+anchors_preset = 0
+offset_left = 416.0
+offset_top = -944.0
+offset_right = 1184.0
+offset_bottom = -752.0
+script = ExtResource("3_j555q")
+separationSize = 300
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Enemy/HandCard" unique_id=1349507601]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -27,24 +36,56 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MinionContainer" type="HBoxContainer" parent="Enemy/ScrollContainer" unique_id=266100839]
+[node name="CardContainer" type="HBoxContainer" parent="Enemy/HandCard/ScrollContainer" unique_id=773861109]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
+
+[node name="DeskCard" type="Control" parent="Enemy" unique_id=266781912]
+anchors_preset = 0
+offset_left = 32.0
+offset_top = -624.0
+offset_right = 1568.0
+offset_bottom = -432.0
+script = ExtResource("4_7obaq")
+separationSize = 300
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Enemy/DeskCard" unique_id=708274615]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MinionContainer" type="HBoxContainer" parent="Enemy/DeskCard/ScrollContainer" unique_id=897672614]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1622706233]
 
 [node name="Player" type="Control" parent="." unique_id=1686292081]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -800.0
-offset_top = 96.0
-offset_right = 744.0
-offset_bottom = 352.0
+offset_left = -704.0
+offset_top = 192.0
+offset_right = 704.0
+offset_bottom = 448.0
 script = ExtResource("2_s5eua")
-initMinionNum = 5
+
+[node name="HandCard" type="Control" parent="Player" unique_id=1319317558]
+anchors_preset = 0
+offset_left = 256.0
+offset_top = 256.0
+offset_right = 1152.0
+offset_bottom = 448.0
+script = ExtResource("3_j555q")
 separationSize = 300
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Player" unique_id=393707399]
+[node name="ScrollContainer" type="ScrollContainer" parent="Player/HandCard" unique_id=2063417195]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -52,19 +93,42 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MinionContainer" type="HBoxContainer" parent="Player/ScrollContainer" unique_id=1696648920]
+[node name="CardContainer" type="HBoxContainer" parent="Player/HandCard/ScrollContainer" unique_id=2010947764]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
 
-[node name="Minions" type="Control" parent="." unique_id=1841747233]
+[node name="DeskCard" type="Control" parent="Player" unique_id=627575984]
+anchors_preset = 0
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 1472.0
+offset_bottom = 128.0
+script = ExtResource("4_7obaq")
+separationSize = 300
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Player/DeskCard" unique_id=393707399]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MinionContainer" type="HBoxContainer" parent="Player/DeskCard/ScrollContainer" unique_id=1696648920]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Cards" type="Control" parent="." unique_id=1841747233]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="FightSceneManager" type="Control" parent="." unique_id=1422935586 node_paths=PackedStringArray("enemyNode", "playerNode", "minionsNode")]
+[node name="FightSceneManager" type="Control" parent="." unique_id=1422935586 node_paths=PackedStringArray("enemyNode", "playerNode", "cardsNode")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -72,4 +136,4 @@ offset_bottom = 40.0
 script = ExtResource("1_a5arp")
 enemyNode = NodePath("../Enemy")
 playerNode = NodePath("../Player")
-minionsNode = NodePath("../Minions")
+cardsNode = NodePath("../Cards")
